@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-family: Verdana, Geneva, sans-serif;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a img {
+  border: none;
+}
+.cf {
+  *zoom: 1;
+}
+.cf:before,
+.cf:after {
+  content: " ";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
