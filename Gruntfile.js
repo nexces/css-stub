@@ -1,6 +1,7 @@
 'use strict';
 module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
+    var path = require('path');
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         
@@ -39,12 +40,31 @@ module.exports = function (grunt) {
                 files: ['sources/less/*.less'],
                 tasks: ['less:development']
             }
+        },
+
+        //build package
+        zip: {
+            package: {
+                src: [
+                    'public/**',
+                    'sources/**',
+                    'Gruntfile.js',
+                    'package.json',
+                    'README.md',
+                    'Vagrantfile'
+                ],
+                dest: path.relative('..','.') + '.zip',
+                compression: 'DEFLATE',
+                base64: true,
+                dot: true
+            }
         }
     });
     
     grunt.registerTask('default', [
         'clean',
-        'less:production'
+        'less:production',
+        'zip'
     ]);
 
     grunt.registerTask('development', [
