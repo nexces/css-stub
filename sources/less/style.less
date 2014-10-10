@@ -1,4 +1,4 @@
-@import (reference) 'lesshat';
+@import (reference) 'globals';
 
 body {
   margin: 0;
@@ -6,9 +6,11 @@ body {
   font-size: 16px;
   //  font-family: Arial, Helvetica, sans-serif;
   font-family: Verdana, Geneva, sans-serif;
+  color: @text-color;
 }
 
 a {
+  color: @link-color;
   text-decoration: none;
 }
 
@@ -20,21 +22,11 @@ a img {
   border: none;
 }
 
-.cf() {
-  &:before,
-  &:after {
-    content: " ";
-    display: table;
-  }
-  &:after {
-    clear: both;
-  }
-  *zoom: 1;
-}
-
-
 .cf {
   .cf();
 }
 
+.siteContent {
+  display: block;
+}
 

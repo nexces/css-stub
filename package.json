@@ -10,7 +10,9 @@
         "load-grunt-tasks": "~0.6.0",
         "grunt-contrib-clean": "~0.6.0",
         "grunt-contrib-watch": "~0.6.1",
-        "grunt-zip": "~0.16.0"
+        "grunt-zip": "~0.16.0",
+        "grunt-contrib-jshint": "~0.10.0",
+        "grunt-contrib-uglify": "~0.6.0"
     },
     "private": "true"
 }

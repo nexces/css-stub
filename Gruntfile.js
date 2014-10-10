@@ -7,7 +7,11 @@ module.exports = function (grunt) {
         
         // clean
         clean: {
-            build: ['public/css/style.css']
+            styles: ['public/css/style.css'],
+            scripts: [
+                'public/js/main.js',
+                'public/js/main.js.map'
+            ]
         },
         
         // compile less
@@ -34,11 +38,52 @@ module.exports = function (grunt) {
             }
         },
 
+        // validate JS
+        jshint: {
+            sources: {
+                files: {
+                    src: ['sources/js/*.js']
+                }
+            }
+        },
+
+        // build sources
+        uglify: {
+            development: {
+                options: {
+                    sourceMap: true,
+                    sourceMapName: 'public/js/main.js.map',
+                    sourceMapIncludeSources: true,
+                    mangle: true,
+                    compress: true
+                },
+                files: {
+                    'public/js/main.js': ['sources/js/*.js']
+                }
+            },
+            production: {
+                options: {
+                    sourceMap: false,
+                    mangle: true,
+                    compress: {
+                        drop_console: true
+                    }
+                },
+                files: {
+                    'public/js/main.js': ['sources/js/*.js']
+                }
+            }
+        },
+
         // development watch
         watch: {
             less: {
                 files: ['sources/less/*.less'],
-                tasks: ['less:development']
+                tasks: ['clean:styles', 'less:development']
+            },
+            javascript: {
+                files: ['sources/js/*.js'],
+                tasks: ['jshint:sources', 'clean:scripts', 'uglify:development']
             }
         },
 
@@ -62,12 +107,23 @@ module.exports = function (grunt) {
     });
     
     grunt.registerTask('default', [
-        'clean',
+        'clean:styles',
         'less:production',
+        'jshint:sources',
+        'clean:scripts',
+        'uglify:production',
         'zip'
     ]);
 
     grunt.registerTask('development', [
+        'clean:styles',
+        'less:development',
+        'jshint:sources',
+        'clean:scripts',
+        'uglify:development'
+    ]);
+
+    grunt.registerTask('development-watch', [
         'watch'
     ]);
 };
