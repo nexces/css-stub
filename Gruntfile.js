@@ -106,7 +106,7 @@ module.exports = function (grunt) {
         }
     });
     
-    grunt.registerTask('default', [
+    grunt.registerTask('production-build', [
         'clean:styles',
         'less:production',
         'jshint:sources',
@@ -126,5 +126,9 @@ module.exports = function (grunt) {
     grunt.registerTask('development-watch', [
         'development',
         'watch'
+    ]);
+
+    grunt.registerTask('default', [
+        'development-watch'
     ]);
 };
