@@ -124,6 +124,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('development-watch', [
+        'development',
         'watch'
     ]);
 };
