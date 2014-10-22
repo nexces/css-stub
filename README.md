@@ -17,17 +17,21 @@ Usage
 
 While developing it is handy to have a console with launched:
 
-    grunt development
+    grunt
     
+or
+
+    grunt development-watch
+
 This will start grunt task to watch for less file changes and compile them into style.css
 
 Remember to kill that task before performing final build.
 
 Once you're done developing punch in:
 
-    grunt default
+    grunt production-build
     
-And compressed CSS file will be created.
+And compressed CSS file will be created along with ZIP package
 
 Vagrant
 =======
