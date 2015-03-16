@@ -103,6 +103,25 @@ module.exports = function (grunt) {
                 base64: true,
                 dot: true
             }
+        },
+
+        browserSync: {
+            dev: {
+                bsFiles: {
+                    src: [
+                        'public/**'
+                    ]
+                },
+                options: {
+                    watchTask: true,
+                    server: {
+                        baseDir: './public',
+                        directory: true,
+                        index: '_index.html'
+                    },
+                    startPath: '_index.html'
+                }
+            }
         }
     });
     
@@ -124,6 +143,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('development-watch', [
+        'browserSync',
         'development',
         'watch'
     ]);
