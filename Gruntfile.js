@@ -38,6 +38,23 @@ module.exports = function (grunt) {
             }
         },
 
+        jade: {
+            production: {
+                options: {
+                    pretty: true
+                },
+                files: [
+                    {
+                        cwd: "sources/jade",
+                        src: "*.jade",
+                        dest: "public",
+                        expand: true,
+                        ext: ".html"
+                    }
+                ]
+            }
+        },
+
         // validate JS
         jshint: {
             sources: {
@@ -84,6 +101,10 @@ module.exports = function (grunt) {
             javascript: {
                 files: ['sources/js/*.js'],
                 tasks: ['jshint:sources', 'clean:scripts', 'uglify:development']
+            },
+            jade: {
+                files: ['sources/jade/*.jade', 'sources/jade/**/*.jade'],
+                tasks: ['jade:production']
             }
         },
 
@@ -117,9 +138,9 @@ module.exports = function (grunt) {
                     server: {
                         baseDir: './public',
                         directory: true,
-                        index: '_index.html'
+                        index: 'index.html'
                     },
-                    startPath: '_index.html'
+                    startPath: 'index.html'
                 }
             }
         }
@@ -131,6 +152,7 @@ module.exports = function (grunt) {
         'jshint:sources',
         'clean:scripts',
         'uglify:production',
+        'jade:production',
         'zip'
     ]);
 
@@ -139,7 +161,8 @@ module.exports = function (grunt) {
         'less:development',
         'jshint:sources',
         'clean:scripts',
-        'uglify:development'
+        'uglify:development',
+        'jade:production'
     ]);
 
     grunt.registerTask('development-watch', [

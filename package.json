@@ -6,7 +6,9 @@
         "grunt": "~0.4.5"
     },
     "devDependencies": {
+        "coffee-script": "~1.9.2",
         "grunt-contrib-less": "~0.11.4",
+        "grunt-contrib-jade": "~0.14.1",
         "load-grunt-tasks": "~0.6.0",
         "grunt-contrib-clean": "~0.6.0",
         "grunt-contrib-watch": "~0.6.1",
