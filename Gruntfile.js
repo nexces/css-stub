@@ -95,7 +95,7 @@ module.exports = function (grunt) {
         // development watch
         watch: {
             less: {
-                files: ['sources/less/*.less'],
+                files: ['sources/less/*.less', 'sources/less/**/*.less'],
                 tasks: ['clean:styles', 'less:development']
             },
             javascript: {
@@ -145,7 +145,7 @@ module.exports = function (grunt) {
             }
         }
     });
-    
+
     grunt.registerTask('production-build', [
         'clean:styles',
         'less:production',
