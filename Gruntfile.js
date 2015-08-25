@@ -177,7 +177,6 @@ module.exports = function (grunt) {
         unzip: {
             fontelloSymbols: {
                 router: function (filename) {
-                    // strip first directory using 'path' extension
                     return filename.replace(/fontello-[a-z0-9]+[/]/, '');
                 },
                 src: ['fontello-*.zip'],
