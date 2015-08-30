@@ -9,6 +9,7 @@ module.exports = function (grunt) {
         clean: {
             styles: ['public/css/style.css'],
             scripts: [
+                'build/js/main.js',
                 'public/js/main.js',
                 'public/js/main.js.map'
             ],
@@ -50,16 +51,6 @@ module.exports = function (grunt) {
                     }
                 ]
             }
-            //fontelloSymbolsFontFamily: {
-            //    path: 'public/res/symbols/css/',
-            //    pattern: 'font-family: [\'"]symbols[\'"]',
-            //    replacement: '/*noinspection CssNoGenericFontName*/\n  font-family: "symbols"'
-            //},
-            //fontelloSymbolsSpeak: {
-            //    path: 'public/res/symbols/css/',
-            //    pattern: 'speak: none',
-            //    replacement: '/*noinspection CssUnknownProperty*/\n  speak: none'
-            //}
         },
 
         // compile less
@@ -114,18 +105,6 @@ module.exports = function (grunt) {
 
         // build sources
         uglify: {
-            development: {
-                options: {
-                    sourceMap: true,
-                    sourceMapName: 'public/js/main.js.map',
-                    sourceMapIncludeSources: true,
-                    mangle: true,
-                    compress: true
-                },
-                files: {
-                    'public/js/main.js': ['sources/js/*.js']
-                }
-            },
             production: {
                 options: {
                     sourceMap: false,
@@ -135,8 +114,30 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    'public/js/main.js': ['sources/js/*.js']
+                    'public/js/main.js': ['build/js/*.js']
                 }
+            }
+        },
+        // build TS sources
+        'ts': {
+            'development': {
+                src: ['sources/ts/*.ts'],
+                out: 'public/js/main.js',
+                options: {
+                    sourceMap: true,
+                    inlineSourceMap: true,
+                    inlineSources: true
+                }
+            },
+            'production': {
+                src: ['sources/ts/*.ts'],
+                out: 'build/js/main.js',
+                options: {
+                    sourceMap: false
+                }
+            },
+            options: {
+                target: 'es5'
             }
         },
 
@@ -149,6 +150,10 @@ module.exports = function (grunt) {
             javascript: {
                 files: ['sources/js/*.js'],
                 tasks: ['jshint:sources', 'clean:scripts', 'uglify:development']
+            },
+            typescript: {
+                files: ['sources/ts/*.ts'],
+                tasks: ['clean:scripts', 'ts:development']
             },
             jade: {
                 files: ['sources/jade/*.jade', 'sources/jade/**/*.jade'],
@@ -207,8 +212,8 @@ module.exports = function (grunt) {
     grunt.registerTask('production-build', [
         'clean:styles',
         'less:production',
-        'jshint:sources',
         'clean:scripts',
+        'ts:production',
         'uglify:production',
         'jade:production',
         'zip'
@@ -217,9 +222,8 @@ module.exports = function (grunt) {
     grunt.registerTask('development', [
         'clean:styles',
         'less:development',
-        'jshint:sources',
         'clean:scripts',
-        'uglify:development',
+        'ts:development',
         'jade:production'
     ]);
 
