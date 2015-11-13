@@ -1,0 +1,52 @@
+@import "globals";
+
+.slider {
+  overflow: hidden;
+  width: 100%;
+  .slides {
+    width: 100%;
+    overflow: hidden;
+    font-size: 0;
+    white-space: nowrap;
+    .slide {
+      white-space: normal;
+      font-size: @font-base * .75pt;
+      position: relative;
+      width: 100%;
+      display: inline-block;
+      pointer-events: none;
+      vertical-align: middle;
+      z-index: 1;
+      .transition(all .5s);
+      background: center top no-repeat;
+      .background-size(cover);
+      .src {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+        pointer-events: none;
+      }
+      &.active {
+        pointer-events: auto;
+      }
+    }
+  }
+  &.fade {
+    .slides {
+      .slide {
+        opacity: 0;
+        &.active {
+          opacity: 1;
+        }
+        .loop(@counter) when (@counter > 0) {
+          .loop((@counter - 1));    // next iteration
+          &:nth-child(@{counter}) {
+            left: ((@counter - 1) * -100%);
+          }
+        }
+        .loop(40); // launch the loop
+      }
+    }
+  }
+}

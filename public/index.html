@@ -7,14 +7,47 @@
     <link rel="stylesheet" href="css/style.css" media="all">
   </head>
   <body>
-    <header class="siteHeader"><a href="index.html" class="logo">LOGO</a></header>
+    <header class="siteHeader">
+      <div class="wrapper"><a href="index.html" class="logo">LOGO</a><a id="nav-toggle" class="menuSwitch"><span></span></a>
+        <nav class="menu"><a href="?link1">Link 1</a><a href="?link2">Link 2</a><a href="?link3">Link 3</a></nav>
+      </div>
+    </header>
+    <div class="slider fade">
+      <div class="slides">
+        <div class="slide"><img src="//lorempixel.com/500/300/abstract/1/" class="src">
+          <div class="content">
+            <div class="wrapper">
+              <h1>Slide 1</h1>
+            </div>
+          </div>
+        </div>
+        <div class="slide"><img src="//lorempixel.com/500/300/abstract/2/" class="src">
+          <div class="content">
+            <div class="wrapper">
+              <h1>Slide 2 with some content</h1>
+              <p>Sunt guttuses amor nobilis, dexter decores. Est nobilis solitudo, cesaris. Ventus de ferox indictio, pugna animalis!</p>
+              <p>Sunt guttuses amor nobilis, dexter decores. Est nobilis solitudo, cesaris. Ventus de ferox indictio, pugna animalis!</p>
+              <p>Sunt guttuses amor nobilis, dexter decores. Est nobilis solitudo, cesaris. Ventus de ferox indictio, pugna animalis!</p>
+              <p>Sunt guttuses amor nobilis, dexter decores. Est nobilis solitudo, cesaris. Ventus de ferox indictio, pugna animalis!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <main role="main" class="siteContent">
-      <p>If you sit or shine with a soft beauty, living avoids you.</p>
+      <div class="wrapper">
+        <p>If you sit or shine with a soft beauty, living avoids you.</p>
+      </div>
     </main>
     <footer class="siteFooter">
-      <div class="createdBy">Projekt i wykonanie:<a href="//prosatis.pl/">Prosatis.pl</a></div>
+      <div class="wrapper">
+        <div class="createdBy">Projekt i wykonanie:<a href="//prosatis.pl/">Prosatis.pl</a></div>
+      </div>
     </footer>
-    <!--script(src="js/main.js")-->
-    <script>console.log("!");</script>
+    <script src="js/main.js"></script>
+    <script>
+      new Slider('.slider.fade');
+      console.log("index.jade::13 - just a reminder");
+    </script>
   </body>
 </html>

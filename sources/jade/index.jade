@@ -4,14 +4,12 @@ block title
     title CSS Stub - index
 
 block body
-    header.siteHeader
-        a.logo(href="index.html") LOGO
-    main(role="main").siteContent
-        p If you sit or shine with a soft beauty, living avoids you.
-    footer.siteFooter
-        div.createdBy Projekt i wykonanie:
-            a(href="//prosatis.pl/") Prosatis.pl
+    include includes/site-header
+    include includes/site-banner
+    include includes/site-content
+    include includes/site-footer
 
 block scripts
     script.
-        console.log("!");
+        new Slider('.slider.fade');
+        console.log("index.jade::13 - just a reminder");
