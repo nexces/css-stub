@@ -134,7 +134,7 @@ class Slider {
             $slide = <HTMLElement> this.$$slides[i];
             $slide.style.minHeight = null;
         }
-        this.containerHeight = this.$slidesContainer.offsetHeight;
+        this.containerHeight = this.$slidesContainer.clientHeight;
         // set minHeight
         for (i = 0; i < this.$$slides.length; i++) {
             $slide = <HTMLElement> this.$$slides[i];
