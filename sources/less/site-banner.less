@@ -49,4 +49,23 @@
       }
     }
   }
+  &.slide {
+    .slides {
+      .display(flex);
+      .flex-wrap(nowrap);
+      //.transition(transform .5s);
+      .slide {
+        width: 100vw;
+      }
+    }
+    .loop(@counter) when (@counter > 0) {
+      .loop((@counter - 1));    // next iteration
+      &.slide-@{counter}-active {
+        .slides .slide {
+          .translateX((@counter - 1) * -100%);
+        }
+      }
+    }
+    .loop(40); // launch the loop
+  }
 }

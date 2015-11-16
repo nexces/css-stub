@@ -6,10 +6,11 @@ block title
 block body
     include includes/site-header
     include includes/site-banner
-    include includes/site-content
+    main(role="main").siteContent: div.wrapper
+        p If you sit or shine with a soft beauty, living avoids you.
     include includes/site-footer
 
 block scripts
     script.
         new Slider('.slider.fade');
-        console.log("index.jade::13 - just a reminder");
+        new Slider('.slider.slide');

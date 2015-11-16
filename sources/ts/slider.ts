@@ -4,7 +4,7 @@
 interface SliderConfiguration {
     nextSlideDelay?: number;
     setBackground?: boolean;
-    transition?: string;
+    //transition?: string;
 }
 interface SlideData extends DOMStringMap {
     num: string;
@@ -21,7 +21,7 @@ class Slider {
 
     private setBackground = true;
     private transition = 'fade';
-    private supportedTransitions = ['fade', 'slide'];
+    //private supportedTransitions = ['fade', 'slide'];
 
     private $slider: HTMLElement;
     private $slidesContainer: HTMLElement;
@@ -49,21 +49,30 @@ class Slider {
             if (sliderConfiguration.setBackground) {
                 this.setBackground = sliderConfiguration.setBackground;
             }
-            if (sliderConfiguration.transition) {
-                if (this.supportedTransitions.indexOf(sliderConfiguration.transition) > -1) {
-                    this.transition = sliderConfiguration.transition;
-                } else {
-                    console.warn(
-                        'Slider::constructor() => Unsupported transition type "%s"; Falling back to "%s"',
-                        sliderConfiguration.transition,
-                        this.transition
-                    );
-                }
-            }
+            //if (sliderConfiguration.transition) {
+            //    if (this.supportedTransitions.indexOf(sliderConfiguration.transition) > -1) {
+            //        this.transition = sliderConfiguration.transition;
+            //    } else {
+            //        console.warn(
+            //            'Slider::constructor() => Unsupported transition type "%s"; Falling back to "%s"',
+            //            sliderConfiguration.transition,
+            //            this.transition
+            //        );
+            //    }
+            //}
+        }
+
+        if (this.$slider.classList.contains('slide')) {
+            this.transition = 'slide';
         }
 
         this.$slidesContainer = <HTMLElement> this.$slider.querySelector('.slides');
         this.$$slides = this.$slidesContainer.querySelectorAll('.slide');
+
+        if (this.$$slides.length == 0) {
+            console.log('Slider::constructor() => nothing to rotate');
+            return;
+        }
 
         this.$dotsContainer = <HTMLElement> this.$slider.querySelector('.dots');
 
@@ -86,7 +95,7 @@ class Slider {
         }
 
         if (this.transition == 'slide') {
-            this.$$slides[0].parentElement.style.width = (this.$$slides.length * 100) + '%';
+            this.$slidesContainer.style.width = (this.$$slides.length * 100) + '%';
         }
 
         for (var i = 0; i< this.$$slides.length; i++) {
@@ -202,6 +211,8 @@ class Slider {
         $next.classList.remove('initial');
         $next.classList.add('active');
         nextNum = nextData.num || $next.className.match(/slide-(\d+)/)[1];
+        this.$slider.className = this.$slider.className.replace(/slide-(\d+)-active/, '');
+        this.$slider.classList.add('slide-' + nextNum + '-active');
         if (this.$dotsContainer) {
             $nextDot = <HTMLElement> this.$dotsContainer.querySelector('.dot:nth-child(' + nextNum + ')');
             $nextDot.classList.add('active');
