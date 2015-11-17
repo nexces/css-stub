@@ -12,7 +12,7 @@
         <nav class="menu"><a href="?link1">Link 1</a><a href="?link2">Link 2</a><a href="?link3">Link 3</a></nav>
       </div>
     </header>
-    <div class="slider fade">
+    <div class="slider fading a">
       <div class="slides">
         <div class="slide"><img src="//lorempixel.com/500/300/abstract/1/" class="src">
           <div class="content">
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="slider slide">
+    <div data-delay="0" class="slider sliding b">
       <div class="slides">
         <div class="slide"><img src="//lorempixel.com/500/300/abstract/1/" class="src">
           <div class="content">
@@ -56,6 +56,27 @@
         </div>
       </div>
     </div>
+    <div class="slider sliding c">
+      <div class="slides">
+        <div class="slide">
+          <div class="content">
+            <div class="wrapper"><img src="//lorempixel.com/200/200/abstract/3/"><img src="//lorempixel.com/200/200/abstract/4/"><img src="//lorempixel.com/200/200/abstract/5/"><img src="//lorempixel.com/200/200/abstract/6/"></div>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="content">
+            <div class="wrapper"><img src="//lorempixel.com/200/200/abstract/7/"><img src="//lorempixel.com/200/200/abstract/8/"><img src="//lorempixel.com/200/200/abstract/9/"><img src="//lorempixel.com/200/200/abstract/10/"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          new Slider('.slider.a');
+          new Slider('.slider.b');
+          new Slider('.slider.c');
+      });
+    </script>
     <main role="main" class="siteContent">
       <div class="wrapper">
         <p>If you sit or shine with a soft beauty, living avoids you.</p>
@@ -67,9 +88,5 @@
       </div>
     </footer>
     <script src="js/main.js"></script>
-    <script>
-      new Slider('.slider.fade');
-      new Slider('.slider.slide');
-    </script>
   </body>
 </html>

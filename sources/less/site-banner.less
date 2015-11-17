@@ -1,23 +1,58 @@
 @import "globals";
+.kf-spinner() {
+  0% { .rotate(0deg); }
+  100% { .rotate(360deg); }
+}
+@-moz-keyframes three-quarters-loader { .kf-spinner(); }
+@-webkit-keyframes three-quarters-loader { .kf-spinner(); }
+@keyframes three-quarters-loader { .kf-spinner(); }
 
 .slider {
   overflow: hidden;
   width: 100%;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -1em;
+    margin-top: -1em;
+    z-index: 4;
+
+    .transition(opacity .3s);
+
+    .animation(three-quarters-loader 1250ms infinite linear);
+
+    border: .5em solid;
+    border-right-color: transparent;
+    border-radius: 100%;
+    box-sizing: border-box;
+    display: inline-block;
+    overflow: hidden;
+    width: 2em;
+    height: 2em;
+    pointer-events: none;
+  }
+
   .slides {
     width: 100%;
     overflow: hidden;
     font-size: 0;
     white-space: nowrap;
+    opacity: 0;
+    .transition(opacity .3s);
+
     .slide {
       white-space: normal;
       font-size: @font-base * .75pt;
       position: relative;
-      width: 100%;
+      width: 100vw;
+      height: 100%;
       display: inline-block;
       pointer-events: none;
       vertical-align: middle;
       z-index: 1;
-      .transition(all .5s);
       background: center top no-repeat;
       .background-size(cover);
       .src {
@@ -29,12 +64,14 @@
       }
       &.active {
         pointer-events: auto;
+        z-index: 2;
       }
     }
   }
-  &.fade {
+  &.fading {
     .slides {
       .slide {
+        .transition(opacity .5s);
         opacity: 0;
         &.active {
           opacity: 1;
@@ -49,13 +86,12 @@
       }
     }
   }
-  &.slide {
+  &.sliding {
     .slides {
       .display(flex);
       .flex-wrap(nowrap);
-      //.transition(transform .5s);
       .slide {
-        width: 100vw;
+        .transition(transform .5s);
       }
     }
     .loop(@counter) when (@counter > 0) {
@@ -67,5 +103,20 @@
       }
     }
     .loop(40); // launch the loop
+  }
+  .prev, .next, .dot {
+    z-index: 3;
+    * {
+      pointer-events: none;
+    }
+  }
+
+  &.ready {
+    &:before {
+      opacity: 0;
+    }
+    .slides {
+      opacity: 1;
+    }
   }
 }

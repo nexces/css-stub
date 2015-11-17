@@ -1,10 +1,8 @@
 /**
  * Created by adrianp on 02.07.15.
  */
-interface SliderConfiguration {
-    nextSlideDelay?: number;
-    setBackground?: boolean;
-    //transition?: string;
+interface SliderData extends DOMStringMap {
+    delay: string;
 }
 interface SlideData extends DOMStringMap {
     num: string;
@@ -19,9 +17,7 @@ class Slider {
     private nextSlideDelay = 5000;
     private nextSlideTimeout;
 
-    private setBackground = true;
-    private transition = 'fade';
-    //private supportedTransitions = ['fade', 'slide'];
+    private transition = 'fading';
 
     private $slider: HTMLElement;
     private $slidesContainer: HTMLElement;
@@ -31,42 +27,29 @@ class Slider {
     private autoProgress = true;
     private allReady = false;
 
-    private containerHeight = 0;
-
-    constructor(sliderSelector: string, sliderConfiguration?: SliderConfiguration)
+    constructor(sliderSelector: string)
     {
         console.log('Slider::constructor()');
         this.$slider = <HTMLElement> document.querySelector(sliderSelector);
         if (!this.$slider) {
             console.warn('Slider::constructor() => no slider found via "%s"', sliderSelector);
-            return this;
+            return;
         }
 
-        if (sliderConfiguration) {
-            if (sliderConfiguration.nextSlideDelay) {
-                this.nextSlideDelay = sliderConfiguration.nextSlideDelay;
-            }
-            if (sliderConfiguration.setBackground) {
-                this.setBackground = sliderConfiguration.setBackground;
-            }
-            //if (sliderConfiguration.transition) {
-            //    if (this.supportedTransitions.indexOf(sliderConfiguration.transition) > -1) {
-            //        this.transition = sliderConfiguration.transition;
-            //    } else {
-            //        console.warn(
-            //            'Slider::constructor() => Unsupported transition type "%s"; Falling back to "%s"',
-            //            sliderConfiguration.transition,
-            //            this.transition
-            //        );
-            //    }
-            //}
+        if (this.$slider.classList.contains('sliding')) {
+            this.transition = 'sliding';
         }
 
-        if (this.$slider.classList.contains('slide')) {
-            this.transition = 'slide';
+        var sliderData = <SliderData> this.$slider.dataset;
+        if (sliderData.delay) {
+            this.nextSlideDelay = parseInt(sliderData.delay);
         }
 
         this.$slidesContainer = <HTMLElement> this.$slider.querySelector('.slides');
+        if (!this.$slidesContainer) {
+            console.error('Slider::constructor() => Slides should be placed in ".slides" container');
+            return;
+        }
         this.$$slides = this.$slidesContainer.querySelectorAll('.slide');
 
         if (this.$$slides.length == 0) {
@@ -78,10 +61,6 @@ class Slider {
 
         if (this.$$slides.length > 1) {
             this.$slider.classList.add('controllable');
-            if (this.transition == 'slide') {
-                var $slides = <HTMLElement> this.$slider.querySelector('.slides');
-                $slides.style.width = (this.$$slides.length * 100) + '%';
-            }
         }
 
         this.$slider.addEventListener('mouseover', this.handleHover, false);
@@ -94,7 +73,7 @@ class Slider {
             this.$slider.querySelector('.next').addEventListener('click', this.arrowClick, false);
         }
 
-        if (this.transition == 'slide') {
+        if (this.transition == 'sliding') {
             this.$slidesContainer.style.width = (this.$$slides.length * 100) + '%';
         }
 
@@ -102,59 +81,45 @@ class Slider {
             var $slide = <HTMLElement> this.$$slides[i];
             var slideData = <SlideData> $slide.dataset;
             slideData.num = (i+1).toString();
-            $slide.classList.add('slide-' + (i+1));
+            $slide.classList.add('slide-' + slideData.num);
 
-            var $currentDot = <HTMLSpanElement> document.createElement('span');
-            var currentDotData = <DotData> $currentDot.dataset;
-            $currentDot.className = 'dot';
-            currentDotData.num = (i+1).toString();
-            $currentDot.classList.add('slide-' + (i+1));
-
-            $currentDot.addEventListener('click', this.dotClick, false);
             if (this.$dotsContainer) {
+                var $currentDot = <HTMLSpanElement> document.createElement('span');
+                var currentDotData = <DotData> $currentDot.dataset;
+                $currentDot.className = 'dot';
+                currentDotData.num = (i+1).toString();
+                $currentDot.classList.add('slide-' + currentDotData.num);
+
+                $currentDot.addEventListener('click', this.dotClick, false);
                 this.$dotsContainer.appendChild($currentDot);
             }
-            if (this.setBackground) {
-                var $img = <HTMLImageElement> $slide.querySelector('.src');
+
+            var $$imgs = $slide.querySelectorAll('img');
+            for (var i2 = 0; i2 < $$imgs.length; i2++) {
+                var $img = <HTMLImageElement> $$imgs[i2];
                 var imgData = <ImgData> $img.dataset;
-                $slide.style.backgroundImage = 'url(' + $img.src + ')';
                 imgData.ready = $img.complete ? 'true' : 'false';
                 $img.addEventListener('load', this.imgReadyNotification);
+            }
+            var $imgSrc = <HTMLImageElement> $slide.querySelector('.src');
+            if ($imgSrc) {
+                $slide.style.backgroundImage = 'url(' + $imgSrc.src + ')';
             }
         }
 
         this.heightGuard();
         window.addEventListener('resize', this.heightGuard, false);
 
-        if (this.setBackground) {
-            this.imgReadyWait();
-        } else {
-            this.allReady = true;
-            this.$slider.classList.remove('waiting');
-            this.$slider.classList.add('ready');
-            this.loadSlide();
-        }
+        this.imgReadyWait();
     }
 
     private heightGuard = () => {
-        var $slide, i;
-        // reset minHeight
-        for (i = 0; i < this.$$slides.length; i++) {
-            $slide = <HTMLElement> this.$$slides[i];
-            $slide.style.minHeight = null;
-        }
-        this.containerHeight = this.$slidesContainer.clientHeight;
-        // set minHeight
-        for (i = 0; i < this.$$slides.length; i++) {
-            $slide = <HTMLElement> this.$$slides[i];
-            $slide.style.minHeight = this.containerHeight + 'px';
-        }
+        this.$slidesContainer.style.height = null;
+        this.$slidesContainer.style.height = this.$slidesContainer.clientHeight + 'px';
     };
 
     public handleHover = (e: Event) => {
         console.debug('Slider::handleHover()');
-        //e.stopPropagation();
-        //e.stopImmediatePropagation();
         if (e.type === 'mouseover') {
             this.autoProgress = false;
             this.blockAutoProgress();
@@ -173,7 +138,7 @@ class Slider {
 
     public resumeAutoProgress = () => {
         console.debug('Slider::resumeAutoProgress()');
-        if (this.allReady && this.autoProgress) {
+        if (this.allReady && this.autoProgress && this.nextSlideDelay > 0) {
             this.nextSlideTimeout = setTimeout(this.loadSlide, this.nextSlideDelay);
         }
     };
@@ -255,10 +220,11 @@ class Slider {
         var $img = <HTMLImageElement> e.target;
         var imgData = <ImgData> $img.dataset;
         imgData.ready = 'true';
+        this.heightGuard();
     };
 
     public imgReadyWait = () => {
-        var $$img = this.$slider.querySelectorAll('.slide .src[data-ready="false"]');
+        var $$img = this.$slider.querySelectorAll('.slide img[data-ready="false"]');
         if ($$img.length > 0) {
             setTimeout(this.imgReadyWait, 100);
             this.$slider.classList.add('waiting');
@@ -270,3 +236,4 @@ class Slider {
         this.loadSlide();
     };
 }
+
