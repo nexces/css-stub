@@ -143,6 +143,9 @@ module.exports = function (grunt) {
 
         // development watch
         watch: {
+            options: {
+                spawn: false // Important, don't remove this!
+            },
             less: {
                 files: ['sources/less/*.less', 'sources/less/**/*.less'],
                 tasks: ['clean:styles', 'less:development']
@@ -193,7 +196,12 @@ module.exports = function (grunt) {
             dev: {
                 bsFiles: {
                     src: [
-                        'public/**'
+                        'public/*.html',
+                        'public/**/*.html',
+                        'public/*.css',
+                        'public/**/*.css',
+                        'public/*.js',
+                        'public/**/*.js'
                     ]
                 },
                 options: {
