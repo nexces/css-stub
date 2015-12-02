@@ -76,11 +76,14 @@
         &.active {
           opacity: 1;
         }
-        .loop(@counter) when (@counter > 0) {
+        .loop(@counter) when (@counter > 1) {
           .loop((@counter - 1));    // next iteration
           &:nth-child(@{counter}) {
             left: ((@counter - 1) * -100%);
           }
+        }
+        &:nth-child(1) {
+          left: 0;
         }
         .loop(40); // launch the loop
       }
