@@ -1,0 +1,49 @@
+@import "../globals";
+
+#nav-toggle {
+  @width: 35px;
+  @height: 25px;
+  cursor: pointer;
+  padding: @height*2/5 @width @height*3/5 0;
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  span {
+    &, &:before, &:after {
+      cursor: pointer;
+      border-radius: 1px;
+      height: @height/5;
+      width: @width;
+      background: @text-color;
+      position: absolute;
+      display: block;
+      content: '';
+      .transition(all 500ms ease-in-out);
+      left: 0;
+    }
+    &:before {
+      top: -@height*2/5;
+    }
+    &:after {
+      top: @height*2/5;
+    }
+
+  }
+}
+&.nav-active {
+  #nav-toggle span {
+    & {
+      background-color: transparent;
+    }
+    &:before, &:after {
+      top: 0;
+    }
+    &:before {
+      .rotate(45deg);
+    }
+    &:after {
+      .rotate(-45deg);
+    }
+  }
+}

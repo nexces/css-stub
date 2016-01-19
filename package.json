@@ -1,0 +1,27 @@
+{
+  "name": "css-stub",
+  "version": "1.0.0",
+  "description": "css-stub",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "coffee-script": "*",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-jade": "*",
+    "load-grunt-tasks": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-zip": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-browser-sync": "1.9.2",
+    "grunt-cli": "*",
+    "grunt-replace": "*",
+    "grunt-ts": "*",
+    "typescript": "*"
+  },
+  "private": "true",
+  "scripts": {
+    "start": "grunt",
+    "build": "grunt production-build"
+  }
+}
