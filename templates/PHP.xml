@@ -1,0 +1,9 @@
+<templateSet group="PHP">
+  <template name="vtr" value="&lt;?= $translator-&gt;translate('$END$') ?&gt;" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="HTML_TEXT" value="true" />
+      <option name="HTML" value="true" />
+      <option name="PHP" value="false" />
+    </context>
+  </template>
+</templateSet>

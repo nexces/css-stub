@@ -1,0 +1,52 @@
+<application>
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="3b9c6462-b0c8-4589-b2f8-37842f995b32" name="EWS" url="http://ews.s.localhost">
+        <fileTransfer accessType="LOCAL" />
+      </webServer>
+      <webServer id="08421470-f249-4cae-96a3-f6cbad2b92a2" name="p.localhost" url="http://p.localhost">
+        <fileTransfer accessType="LOCAL" />
+      </webServer>
+      <webServer id="f489df98-48f9-4e80-abe2-0ab85cb3850a" name="css@sprint" url="http://drafts.nxstudio.pl">
+        <fileTransfer host="drafts.nxstudio.pl" port="21" rootFolder="/web" password="dfd8df99dfc4df9adfdcdfcbdfdedfc3df9a" username="nexces-drafts">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="2e44cbbb-af43-44c3-aa6a-b8071534e6db" name="pkppr.localhost" url="http://pkppr.localhost">
+        <fileTransfer accessType="LOCAL" />
+      </webServer>
+      <webServer id="1bd59e8c-7662-4280-be44-d3a6ea7e8b66" name="DK9@Vagrant" url="http://dev.sprintdatacenter.pl">
+        <fileTransfer accessType="LOCAL" />
+      </webServer>
+      <webServer id="0d62a8e6-01f9-4a4d-9d80-05801c941549" name="ews.dev" url="http://ews.dev">
+        <fileTransfer accessType="LOCAL" />
+      </webServer>
+      <webServer id="9972a0b9-4808-42d7-bee0-7471f0161283" name="investcom@prosatis.pl" url="http://investcom.prosatis.pl">
+        <fileTransfer host="investcom.prosatis.pl" port="21" password="dfe3dfc4dffcdf99df98df9bdf8b" username="investcom">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="d6ed852d-d0ae-4aeb-ad05-74de4551ed96" name="yoisushi.olsztyn.pl" url="http://yoisushi.olsztyn.pl/gastro/sprzedaz/">
+        <fileTransfer host="yoisushi.olsztyn.pl" port="21" rootFolder="/domains/yoisushi.olsztyn.pl/public_html/gastro/sprzedaz" password="dff3dfc5dfe3dfe2dfcbdfd9dfc6dfe5df9bdf98df99df8b" username="yoisushi">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="89413bf1-2b16-40f3-b362-5b126ee429a6" name="ISP@Vagrant" url="http://dev.panel.sprintdatacenter.pl">
+        <fileTransfer accessType="LOCAL" />
+      </webServer>
+      <webServer id="4610742b-417b-482a-b0b5-7bb55100b78d" name="Poczytacz" url="http://10.96.202.12">
+        <fileTransfer host="10.96.202.12" port="22" privateKey="$USER_HOME$/.ssh/id_rsa" rootFolder="/srv/www" accessType="SFTP" username="root" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</application>

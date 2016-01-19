@@ -1,0 +1,13 @@
+<application>
+  <component name="ScratchFileService">
+    <file url="file://$APPLICATION_CONFIG_DIR$/scratches/scratch" value="PHP" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1" value="PHP" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_2" value="PHP" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_3" value="PHP" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_4" value="PHP" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_5" value="JSON" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_6" value="JSON" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_7" value="JSON" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_8" value="TEXT" />
+  </component>
+</application>
