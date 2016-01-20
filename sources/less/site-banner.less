@@ -10,6 +10,7 @@
 .slider {
   @spinner-size: 2em;
   @transition-speed: .5s;
+  @dot-size: .6em;
 
   overflow: hidden;
   width: 100%;
@@ -112,14 +113,48 @@
     .loop(40); // launch the loop
   }
   .prev, .next, .dot {
-    z-index: 3;
+    cursor: pointer;
     * {
       pointer-events: none;
     }
   }
   .prev, .next, .dots {
+    z-index: 3;
     opacity: 0;
     .transition(opacity @transition-speed);
+  }
+  .prev, .next {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    .translate(0, -50%);
+    font-size: 2em;
+  }
+  .prev {
+    margin-left: -(@page-width / 2);
+  }
+  .next {
+    .translate(-100%, -50%);
+    margin-left: @page-width / 2;
+  }
+  .dots {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    .translateX(-50%);
+    .dot {
+      border: 2px solid;
+      border-radius: 100%;
+      background-color: transparent;
+      display: inline-block;
+      width: @dot-size;
+      height: @dot-size;
+      margin: 0 .4em;
+      .transition(background-color @transition-speed);
+      &.active {
+        background-color: currentColor;
+      }
+    }
   }
 
   &.ready {
@@ -133,4 +168,6 @@
       opacity: 1;
     }
   }
+
+  // custom styling
 }
