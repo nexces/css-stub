@@ -30,9 +30,15 @@ a img {
   display: block;
 }
 .wrapper {
-  max-width: 1180px;
   margin: 0 auto;
   box-sizing: border-box;
+  max-width: 1180px;
+}
+@media (max-width: 1180px) {
+  .wrapper {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 }
 .siteHeader .wrapper {
   display: -webkit-box;

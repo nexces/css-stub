@@ -31,11 +31,14 @@ a img {
 }
 
 .wrapper {
-  max-width: @page-width;
   margin: 0 auto;
   box-sizing: border-box;
+  max-width: @page-width;
+  @media (max-width: @page-width) {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 }
-
 @import "site-header";
 @import "site-banner";
 @import "site-footer";
