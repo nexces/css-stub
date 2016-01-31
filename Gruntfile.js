@@ -77,6 +77,18 @@ module.exports = function (grunt) {
             }
         },
 
+        postcss: {
+            options: {
+                processors: [
+                    require('autoprefixer')({browsers: ['last 2 versions']})
+                ]
+            },
+            styles: {
+                src: 'public/css/style.css',
+                dest: 'public/css/style.css'
+            }
+        },
+
         jade: {
             production: {
                 options: {
@@ -220,6 +232,7 @@ module.exports = function (grunt) {
     grunt.registerTask('production-build', [
         'clean:styles',
         'less:production',
+        'postcss:styles',
         'clean:scripts',
         'ts:production',
         'uglify:production',
@@ -230,6 +243,7 @@ module.exports = function (grunt) {
     grunt.registerTask('development', [
         'clean:styles',
         'less:development',
+        'postcss:styles',
         'clean:scripts',
         'ts:development',
         'jade:production'

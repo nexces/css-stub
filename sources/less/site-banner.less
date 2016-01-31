@@ -1,7 +1,7 @@
 @import "globals";
 .kf-spinner() {
-  0% { .rotate(0deg); }
-  100% { .rotate(360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 @-moz-keyframes three-quarters-loader { .kf-spinner(); }
 @-webkit-keyframes three-quarters-loader { .kf-spinner(); }
@@ -25,9 +25,9 @@
     margin-top: -(@spinner-size / 2);
     z-index: 4;
 
-    .transition(opacity .3s);
+    transition: opacity .3s;
 
-    .animation(three-quarters-loader 1250ms infinite linear);
+    animation: three-quarters-loader 1250ms infinite linear;
 
     border: .5em solid;
     border-right-color: transparent;
@@ -46,7 +46,7 @@
     font-size: 0;
     white-space: nowrap;
     opacity: 0;
-    .transition(opacity @transition-speed);
+    transition: opacity @transition-speed;
 
     .slide {
       white-space: normal;
@@ -59,7 +59,7 @@
       vertical-align: middle;
       z-index: 1;
       background: center top no-repeat;
-      .background-size(cover);
+      background-size: cover;
       .src {
         position: absolute;
         opacity: 0;
@@ -76,7 +76,7 @@
   &.fading {
     .slides {
       .slide {
-        .transition(opacity @transition-speed);
+        transition: opacity @transition-speed;
         opacity: 0;
         &.active {
           opacity: 1;
@@ -96,17 +96,16 @@
   }
   &.sliding {
     .slides {
-      .display(flex);
-      .flex-wrap(nowrap);
+      display: flex;
       .slide {
-        .transition(transform @transition-speed);
+        transition: transform @transition-speed;
       }
     }
     .loop(@counter) when (@counter > 0) {
       .loop((@counter - 1));    // next iteration
       &.slide-@{counter}-active {
         .slides .slide {
-          .translateX((@counter - 1) * -100%);
+          transform: translate((@counter - 1) * -100%, 0);
         }
       }
     }
@@ -121,27 +120,27 @@
   .prev, .next, .dots {
     z-index: 3;
     opacity: 0;
-    .transition(opacity @transition-speed);
+    transition: opacity @transition-speed;
   }
   .prev, .next {
     position: absolute;
     top: 50%;
     left: 50%;
-    .translate(0, -50%);
+    transform: translate(0, -50%);
     font-size: 2em;
   }
   .prev {
     margin-left: -(@page-width / 2);
   }
   .next {
-    .translate(-100%, -50%);
+    transform: translate(-100%, -50%);
     margin-left: @page-width / 2;
   }
   .dots {
     position: absolute;
     bottom: 1em;
     left: 50%;
-    .translateX(-50%);
+    transform: translate(-50%, 0);
     .dot {
       border: 2px solid;
       border-radius: 100%;
@@ -150,7 +149,7 @@
       width: @dot-size;
       height: @dot-size;
       margin: 0 .4em;
-      .transition(background-color @transition-speed);
+      transition: background-color @transition-speed;
       &.active {
         background-color: currentColor;
       }

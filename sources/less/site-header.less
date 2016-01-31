@@ -2,8 +2,8 @@
 
 .siteHeader {
   .wrapper {
-    .display(flex);
-    .justify-content(space-between);
+    display: flex;
+    justify-content: space-between;
     padding: 1em 0;
   }
   @import "site-header/menuSwitch";
@@ -20,7 +20,7 @@
 
   @media (max-width: 800px) {
     .wrapper {
-      .flex-wrap(wrap);
+      flex-wrap: wrap;
     }
     #nav-toggle {
       display: inline-block;
@@ -28,9 +28,9 @@
     .menu {
       width: 100%;
       max-height: 0;
-      .transform-origin(0 0);
-      .scaleY(0);
-      .transition(all .5s);
+      transform-origin: 0 0;
+      transform: scale(1, 0);
+      transition: all .5s;
       overflow: hidden;
       pointer-events: none;
       a {
@@ -42,7 +42,7 @@
     &.nav-active {
       .menu {
         max-height: 10em;
-        .scaleY(1);
+        transform: scale(1, 1);
       }
     }
   }
