@@ -160,7 +160,7 @@ module.exports = function (grunt) {
             },
             less: {
                 files: ['sources/less/*.less', 'sources/less/**/*.less'],
-                tasks: ['clean:styles', 'less:development']
+                tasks: ['development-styles']
             },
             javascript: {
                 files: ['sources/js/*.js'],
@@ -168,7 +168,7 @@ module.exports = function (grunt) {
             },
             typescript: {
                 files: ['sources/ts/*.ts'],
-                tasks: ['clean:scripts', 'ts:development']
+                tasks: ['development-scripts']
             },
             jade: {
                 files: ['sources/jade/*.jade', 'sources/jade/**/*.jade'],
@@ -239,13 +239,18 @@ module.exports = function (grunt) {
         'jade:production',
         'zip'
     ]);
-
-    grunt.registerTask('development', [
+    grunt.registerTask('development-styles', [
         'clean:styles',
         'less:development',
-        'postcss:styles',
+        'postcss:styles'
+    ]);
+    grunt.registerTask('development-scripts', [
         'clean:scripts',
-        'ts:development',
+        'ts:development'
+    ]);
+    grunt.registerTask('development', [
+        'development-styles',
+        'development-scripts',
         'jade:production'
     ]);
 
