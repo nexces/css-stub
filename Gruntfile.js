@@ -2,6 +2,7 @@
 module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
     var path = require('path');
+    //noinspection JSUnusedGlobalSymbols
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -80,7 +81,7 @@ module.exports = function (grunt) {
         postcss: {
             options: {
                 processors: [
-                    require('autoprefixer')({browsers: ['last 2 versions']})
+                    require('autoprefixer')({browsers: ['last 2 versions', 'android > 4']})
                 ]
             },
             styles: {
@@ -136,7 +137,6 @@ module.exports = function (grunt) {
                 src: ['sources/ts/*.ts'],
                 out: 'public/js/main.js',
                 options: {
-                    sourceMap: true,
                     inlineSourceMap: true,
                     inlineSources: true
                 }
@@ -149,7 +149,8 @@ module.exports = function (grunt) {
                 }
             },
             options: {
-                target: 'es5'
+                target: 'es5',
+                newLine: 'LF'
             }
         },
 
