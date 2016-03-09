@@ -6,7 +6,7 @@ Requirements
 Installation
 ============
 
-Make sure that you have `grunt-cli` package installed and then run:
+Start with:
 
     npm install
 
