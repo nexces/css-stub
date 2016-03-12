@@ -41,9 +41,11 @@ a img {
   }
 }
 .siteHeader .wrapper {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -68,6 +70,7 @@ a img {
   position: absolute;
   display: block;
   content: '';
+  -webkit-transition: all 500ms ease-in-out;
   transition: all 500ms ease-in-out;
   left: 0;
 }
@@ -115,6 +118,7 @@ a img {
             transform-origin: 0 0;
     -webkit-transform: scale(1, 0);
             transform: scale(1, 0);
+    -webkit-transition: all .5s;
     transition: all .5s;
     overflow: hidden;
     pointer-events: none;
@@ -163,6 +167,7 @@ a img {
   margin-left: -1em;
   margin-top: -1em;
   z-index: 4;
+  -webkit-transition: opacity .3s;
   transition: opacity .3s;
   -webkit-animation: three-quarters-loader 1250ms infinite linear;
           animation: three-quarters-loader 1250ms infinite linear;
@@ -182,6 +187,7 @@ a img {
   font-size: 0;
   white-space: nowrap;
   opacity: 0;
+  -webkit-transition: opacity 0.5s;
   transition: opacity 0.5s;
 }
 .slider .slides .slide {
@@ -209,6 +215,7 @@ a img {
   z-index: 2;
 }
 .slider.fading .slides .slide {
+  -webkit-transition: opacity 0.5s;
   transition: opacity 0.5s;
   opacity: 0;
 }
@@ -336,11 +343,13 @@ a img {
   left: -3900%;
 }
 .slider.sliding .slides {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 .slider.sliding .slides .slide {
+  -webkit-transition: -webkit-transform 0.5s;
   transition: -webkit-transform 0.5s;
   transition: transform 0.5s;
   transition: transform 0.5s, -webkit-transform 0.5s;
@@ -520,6 +529,7 @@ a img {
 .slider .dots {
   z-index: 3;
   opacity: 0;
+  -webkit-transition: opacity 0.5s;
   transition: opacity 0.5s;
 }
 .slider .prev,
@@ -554,6 +564,7 @@ a img {
   width: 0.6em;
   height: 0.6em;
   margin: 0 .4em;
+  -webkit-transition: background-color 0.5s;
   transition: background-color 0.5s;
 }
 .slider .dots .dot.active {
