@@ -1,7 +1,9 @@
 //'use strict';
 module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
-    var path = require('path');
+    var fs = require('fs'),
+        path = require('path'),
+        Zip = require('jszip');
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -196,8 +198,10 @@ module.exports = function (grunt) {
 
         unzip: {
             fontelloSymbols: {
-                router: function (filename) {
-                    return filename.replace(/fontello-[a-z0-9]+[/]/, '');
+                options: {
+                    router: function (filename) {
+                        return filename.replace(/fontello-[a-z0-9]+[/]/, '');
+                    }
                 },
                 src: ['fontello-*.zip'],
                 dest: 'public/res/symbols/'
