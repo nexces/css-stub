@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
     var path = require('path');
@@ -160,19 +160,19 @@ module.exports = function (grunt) {
             },
             less: {
                 files: ['sources/less/*.less', 'sources/less/**/*.less'],
-                tasks: ['development-styles']
+                tasks: ['development-styles', 'bsReload:css']
             },
             javascript: {
                 files: ['sources/js/*.js'],
-                tasks: ['jshint:sources', 'clean:scripts', 'uglify:development']
+                tasks: ['jshint:sources', 'clean:scripts', 'uglify:development', 'bsReload:all']
             },
             typescript: {
                 files: ['sources/ts/*.ts'],
-                tasks: ['development-scripts']
+                tasks: ['development-scripts', 'bsReload:all']
             },
             jade: {
                 files: ['sources/jade/*.jade', 'sources/jade/**/*.jade'],
-                tasks: ['jade:production']
+                tasks: ['jade:production', 'bsReload:all']
             }
         },
 
@@ -223,8 +223,17 @@ module.exports = function (grunt) {
                         directory: true,
                         index: 'index.html'
                     },
-                    startPath: 'index.html'
+                    startPath: 'index.html',
+                    background: true
                 }
+            }
+        },
+        bsReload: {
+            css: {
+                reload: 'public/css/style.css'
+            },
+            all: {
+                reload: true
             }
         }
     });
@@ -277,4 +286,97 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [
         'development-watch'
     ]);
+
+    grunt.registerMultiTask('zip', 'Zip files together', function () {
+        grunt.log.debug('Task started');
+        // Localize variables
+        var options = this.options({
+            base64: false,
+            router: function (path) {
+                return path;
+            },
+            compression: 'DEFLATE'
+        });
+        grunt.verbose.debug('Options: ', options);
+        this.files.forEach(function (target) {
+            grunt.log.subhead('Creating: %s', target.dest);
+            target.cwd && grunt.verbose.debug('CWD: %s', target.cwd);
+            var zip = new Zip();
+            target.src.forEach(function (input) {
+                if (input == '') return; // skips empty path - probably related to using CWD
+                var routedPath = options.router(input);
+                var inputPath = path.join((target.cwd || '.'), input);
+                if (grunt.file.isDir(inputPath)) {
+                    grunt.verbose.writeln('Adding folder: "' + input + '" -> "' + routedPath + '"');
+                    zip.folder(routedPath);
+                } else {
+                    var fileContent = fs.readFileSync(inputPath);
+
+                    // If it has a path, add it (allows for skipping)
+                    if (routedPath) {
+                        grunt.verbose.writeln('Adding file: "' + input + '" -> "' + routedPath + '"');
+                        zip.file(routedPath, fileContent);
+                    }
+                }
+            });
+            // ensure target directory exists
+            var destDir = path.dirname(target.dest);
+            grunt.file.mkdir(destDir);
+
+            // Write out the content
+            var output = zip.generate({type: 'nodebuffer', compression: options.compression});
+            fs.writeFileSync(target.dest, output);
+        });
+    });
+
+    grunt.registerMultiTask('unzip', 'Unzip files into a folder', function () {
+        grunt.log.debug('Task started');
+        // Localize variables
+        var options = this.options({
+            router: function (path) {
+                return path;
+            },
+            base64: false,
+            checkCRC32: true
+        });
+        grunt.verbose.debug('Options: ', options);
+        this.files.forEach(function (target) {
+
+            target.src.forEach(function (archive) {
+                grunt.log.subhead('Unpacking %s', archive);
+                // Read in the contents
+                var input = fs.readFileSync(archive);
+                // Unzip it
+                var zip = new Zip(input, {checkCRC32: options.checkCRC32});
+                //grunt.verbose.debug('archive content: ', zip.files);
+                var archiveContents = Object.getOwnPropertyNames(zip.files);
+                //grunt.verbose.debug('Archive content: ', archiveContents);
+                archiveContents.forEach(function (key) {
+                    var archiveEntry = zip.files[key];
+                    var routedPath = options.router(archiveEntry.name);
+                    if (!routedPath) {
+                        // skip on empty name
+                        return true;
+                    }
+                    routedPath = path.join(target.dest, routedPath);
+                    if (archiveEntry.dir) {
+                        // create dir unconditionally
+                        grunt.verbose.writeln('Creating dir: %s -> %s', archiveEntry.name, routedPath);
+                        grunt.file.mkdir(routedPath);
+                    } else {
+                        // ensure that directory in routedPath exists
+                        grunt.verbose.writeln('Writing file: %s -> %s', archiveEntry.name, routedPath);
+                        grunt.file.mkdir(path.dirname(routedPath));
+                        fs.writeFileSync(
+                            routedPath,
+                            archiveEntry.asNodeBuffer(),
+                            {
+                                mode: archiveEntry.unixPermissions
+                            }
+                        );
+                    }
+                });
+            });
+        });
+    });
 };
